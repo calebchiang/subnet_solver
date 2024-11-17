@@ -20,11 +20,20 @@ pub async fn calculate_subnet(
     }
 
     let network_address = utils::calculate_network_address(&ip, subnet_mask);
+    let first_host_address = utils::calculate_first_host_address(&network_address);
+    let broadcast_address = utils::calculate_broadcast_address(&network_address, subnet_mask);
+    let last_host_address = utils::calculate_last_host_address(&broadcast_address);
+    let next_subnet_address = utils::calculate_next_subnet_address(&network_address, subnet_mask);
+
 
     let response = json!({
         "ip": ip,
         "subnet_mask": subnet_mask,
-        "network_address": network_address
+        "network_address": network_address,
+        "first_host_address": first_host_address,
+        "broadcast_address": broadcast_address,
+        "last_host_address": last_host_address,
+        "next_subnet_address": next_subnet_address
     });
 
     HttpResponse::Ok().json(response)
